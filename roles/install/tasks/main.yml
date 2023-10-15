@@ -1,0 +1,26 @@
+---
+- name: "Copy install package to server"
+  ansible.builtin.copy:
+    src: files/{{ installer }}
+    dest: /tmp/{{ installer }}
+    mode: "0600"
+
+- name: "Install package"
+  ansible.builtin.apt:
+    deb: /tmp/{{ installer }}
+    state: present
+  become: true
+
+- name: "Check if agent is enrolled"
+  ansible.builtin.shell: |
+    grep -E '^\s*fleetManagement:' /etc/humio-log-collector/config.yaml &&
+    grep -E '^\s*url: https://cloud.(community.)?humio.com' /etc/humio-log-collector/config.yaml &&
+    grep -E '^\s*mode: full' /etc/humio-log-collector/config.yaml
+  register: config_check
+  changed_when: false
+  ignore_errors: true
+
+- name: "Enroll agent, if needed"
+  ansible.builtin.command:
+    sudo humio-log-collector enroll {{ enrollment_token }}
+  when: config_check.rc != 0
