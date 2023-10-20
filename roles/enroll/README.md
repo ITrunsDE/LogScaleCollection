@@ -1,17 +1,17 @@
-Install Falcon LogScale Collector agent
+Enroll Falcon LogScale Collector agent
 =========
 
-Installation of the Falcon LogScale Collector agent on Linux distributions. 
+Enrolment of the Falcon LogScale Collector agent on Linux distributions. 
 
 Requirements
 ------------
 
-Provision of the installation file from the Falcon LogScale Download Portal.
+Installed Falcon LogScale Collector on the system. 
 
 Role Variables
 --------------
 
-- `installer_file` for installing the collector agent on the system
+- `enrollment_token` is needed for the enrollment to the LogScale platform
 
 
 Example Playbook
@@ -23,9 +23,9 @@ Including an example of how to use your role (for instance, with variables passe
 ---
 - hosts: servers
   roles:
-    - name: itrunsde.logscale_collector.install
+    - name: itrunsde.logscale_collector.enroll
       vars:
-      - installer: "humio-log-collector_1.5.3_linux_amd64.deb"
+        - enrollment_token: "xxxxxxxxxx"
 ```
 
 License

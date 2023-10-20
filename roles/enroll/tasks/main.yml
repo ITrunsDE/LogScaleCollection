@@ -1,0 +1,35 @@
+---
+- name: "Check the enrollment_token"
+  ansible.builtin.set_fact:
+    decoded_string: "{{ enrollment_token | b64decode | from_json }}"
+  ignore_errors: true
+  register: decoded_result
+
+- name: "Display custom error message if decoding failed"
+  fail:
+    msg: "Please check your enrollment_token, somethings seems wrong."
+  when: decoded_result is failed
+ 
+- name: "Check if installToken is present inside the decoded string"
+  fail:
+    msg: "'installToken' not found in decoded_string!"
+  when: "'installToken' not in decoded_string"
+
+- name: "Check if url is present inside the decoded string"
+  fail:
+    msg: "'URL' not found in decoded_string!"
+  when: "'url' not in decoded_string"
+
+- name: "Check if agent is enrolled"
+  ansible.builtin.shell: |
+    grep -E '^\s*fleetManagement:' /etc/humio-log-collector/config.yaml &&
+    grep -E '^\s*url: https://cloud.(community.)?humio.com' /etc/humio-log-collector/config.yaml &&
+    grep -E '^\s*mode: full' /etc/humio-log-collector/config.yaml
+  register: config_check
+  changed_when: false
+  ignore_errors: true
+
+- name: "Enroll agent, if needed"
+  ansible.builtin.command:
+    "sudo humio-log-collector enroll {{ enrollment_token }}"
+  when: config_check.rc != 0

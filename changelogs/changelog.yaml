@@ -1,4 +1,14 @@
 releases:
+  1.1.0:
+    release_date: '2023-10-20'
+    changes:
+      minor_changes::
+        - Added a check for the new `enrollment_token`, if a installToken and url is present
+  1.0.6:
+    release_date: '2023-10-20'
+    changes:
+      breaking_changes:
+        - extracted the installer to a separate role
   1.0.5:
     release_date: '2023-10-20'
     changes:

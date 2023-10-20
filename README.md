@@ -13,6 +13,7 @@ Tested with the Ansible Core >= 2.13.0 versions, and the current development ver
 | Role Name | Documentation | 
 | --------- | :-----------: | 
 | itrunsde.logscale_collector.install | [README](https://github.com/ITrunsDE/LogScaleCollection/blob/main/roles/install/README.md) | 
+| itrunsde.logscale_collector.enroll | [README](https://github.com/ITrunsDE/LogScaleCollection/blob/main/roles/enroll/README.md) | 
 
 ## Installing this collection
 
@@ -62,8 +63,10 @@ ansible-galaxy collection install -r requirements.yml
 ---
 - hosts: servers
   roles:
-    - name: itrunsde.logscale
+    - name: itrunsde.logscale_collector.install
       vars:
-      - installer: "humio-log-collector_1.5.2_linux_amd64.deb"
-      - token: "xxxxxxxxxx"
+        - installer: "humio-log-collector_1.5.2_linux_amd64.deb"
+    -name: itrunsde.logscale_collector.enroll
+      vars:
+        - token: "xxxxxxxxxx"
 ```

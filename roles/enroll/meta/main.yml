@@ -1,7 +1,7 @@
 galaxy_info:
   namespace: itrunsde
   author: Sebastian Selig
-  description: Install Falcon LogScale Collector
+  description: Enroll an installed Falcon LogScale Collector
   company: ITrunsDE
 
   # issue_tracker_url: http://example.com/issue/tracker
