@@ -1,0 +1,27 @@
+releases:
+  1.0.5:
+    release_date: '2023-10-20'
+    changes:
+      bugfixes:
+        - reupload
+  1.0.4:
+    release_date: '2023-10-19'
+    changes:
+      bugfixes:
+        - Added the user `humio-log-collector` to the `adm` group for permission to the /var/log/
+  1.0.3:
+    release_date: '2023-10-16'
+    changes:
+      bugfixes:
+        - The variable enrollment_token was not send correctly
+  1.0.2:
+    release_date: '2023-10-16'
+    changes:
+      minor_changes:
+        - Changed the foldername for changelog to changelogs
+  1.0.1:
+    release_date: '2023-10-16'
+    changes:
+      release_summary: Renamed a variable.
+      breaking_changes:
+        - Renamed the variable token to enrollment_toke

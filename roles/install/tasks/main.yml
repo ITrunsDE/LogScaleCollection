@@ -11,6 +11,13 @@
     state: present
   become: true
 
+- name: "Add user to the 'adm' group for reading the /var/log/ directory"
+  ansible.buitin.user:
+    name: humio-log-collector
+    groups: adm
+    append: yes
+  notify: Restart humio-log-collector service
+
 - name: "Check if agent is enrolled"
   ansible.builtin.shell: |
     grep -E '^\s*fleetManagement:' /etc/humio-log-collector/config.yaml &&
@@ -22,5 +29,5 @@
 
 - name: "Enroll agent, if needed"
   ansible.builtin.command:
-    sudo humio-log-collector enroll {{ enrollment_token }}
+    "sudo humio-log-collector enroll {{ enrollment_token }}"
   when: config_check.rc != 0
