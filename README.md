@@ -70,3 +70,7 @@ ansible-galaxy collection install -r requirements.yml
       vars:
         - token: "xxxxxxxxxx"
 ```
+
+# More Information 
+
+If you need more information on this topic, you can find an article on the subject [here](https://mylogscale.com/ansible-collection-falcon-logscale-wie-nutze-ich-diese/).
