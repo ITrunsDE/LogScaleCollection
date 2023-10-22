@@ -1,0 +1,7 @@
+---
+- name: "Add user to the 'adm' group for reading the /var/log/ directory"
+  ansible.builtin.user:
+    name: humio-log-collector
+    groups: adm
+    append: true
+  notify: Restart humio-log-collector service

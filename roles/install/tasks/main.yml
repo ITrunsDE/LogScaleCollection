@@ -1,19 +1,23 @@
 ---
-- name: "Copy install package to server"
-  ansible.builtin.copy:
-    src: files/{{ installer }}
-    dest: /tmp/{{ installer }}
-    mode: "0600"
+- name: "Check if installer file exists"
+  ansible.builtin.stat:
+    path: "files/{{ installer[ansible_facts['os_family'] | lower] }}"
+  delegate_to: localhost
+  become: false
+  register: install_file
 
-- name: "Install package"
-  ansible.builtin.apt:
-    deb: /tmp/{{ installer }}
-    state: present
-  become: true
+- name: "Installer File not found"
+  ansible.builtin.fail:
+    msg: "No installation file for the installation on {{ ansible_facts['os_family'] }} {{ ansible_architecture }} found. Please check if the file is defined and saved in the files/ directory."
+  when: not install_file.stat.exists
 
-- name: "Add user to the 'adm' group for reading the /var/log/ directory"
-  ansible.builtin.user:
-    name: humio-log-collector
-    groups: adm
-    append: yes
-  notify: Restart humio-log-collector service
+- name: "Start tasks for each distribution"
+  when:
+    - ansible_facts['os_family'] | lower in available_installers
+    - install_file.stat.exists
+  block:
+    - name: "Run install script for distribution"
+      ansible.builtin.include_tasks: "{{ ansible_facts['os_family'] | lower }}_{{ ansible_architecture | lower }}.yml"
+
+    - name: "Run post install tasks"
+      ansible.builtin.include_tasks: "post_installation.yml"

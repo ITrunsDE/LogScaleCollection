@@ -40,7 +40,8 @@ galaxy_info:
         - "bionic"
         - "xenial"
 
-  galaxy_tags: 
-    - Falcon
-    - LogScale
-    - Humio
+  galaxy_tags:
+    - falcon
+    - logscale
+    - humio
+    - crowdstrike

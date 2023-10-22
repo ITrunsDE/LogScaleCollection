@@ -1,4 +1,6 @@
 ---
 # vars file for LogScale
-installer_file: 
 enrollment_token:
+available_installers:
+  #- redhat
+  - debian

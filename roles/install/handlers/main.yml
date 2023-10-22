@@ -1,5 +1,5 @@
 ---
 - name: Restart humio-log-collector service
-  systemd:
+  ansible.builtin.systemd:
     name: humio-log-collector
     state: restarted

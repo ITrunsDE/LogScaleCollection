@@ -1,0 +1,12 @@
+---
+- name: "Copy install package to server"
+  ansible.builtin.copy:
+    src: files/{{ installer.redhat }}
+    dest: /tmp/{{ installer.redhat }}
+    mode: "0600"
+
+- name: "Install package"
+  ansible.builtin.apt:
+    deb: /tmp/{{ installer.redhat }}
+    state: present
+  become: true
