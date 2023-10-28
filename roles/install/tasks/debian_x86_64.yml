@@ -1,11 +1,11 @@
 ---
-- name: "Copy install package to server"
+- name: "DEBIAN - Copy install package to server"
   ansible.builtin.copy:
     src: files/{{ installer.debian }}
     dest: /tmp/{{ installer.debian }}
     mode: "0600"
 
-- name: "Install package"
+- name: "DEBIAN - Install package"
   ansible.builtin.apt:
     deb: /tmp/{{ installer.debian }}
     state: present

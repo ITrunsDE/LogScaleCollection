@@ -65,7 +65,9 @@ ansible-galaxy collection install -r requirements.yml
   roles:
     - name: itrunsde.logscale_collector.install
       vars:
-        - installer: "humio-log-collector_1.5.2_linux_amd64.deb"
+        installer:
+          debian: "humio-log-collector_1.5.3_linux_amd64.deb"
+          redhat: "humio-log-collector_1.5.3_linux_amd64.rpm"
     -name: itrunsde.logscale_collector.enroll
       vars:
         - token: "xxxxxxxxxx"
